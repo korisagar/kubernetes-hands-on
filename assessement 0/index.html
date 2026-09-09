@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K. M. Sagar — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #ECEFEA;
+    --bg-panel: #E2E7DF;
+    --ink: #1C2320;
+    --ink-soft: #4E5850;
+    --line: #C7CFC3;
+    --teal: #17332F;
+    --rust: #B85C2E;
+    --paper: #F6F7F3;
+    --radius: 3px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--rust); color:var(--paper); }
+
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  a{ color:inherit; }
+
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:20;
+    background:rgba(236,239,234,0.88);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{
+    font-weight:700; font-size:1.05rem; letter-spacing:-0.01em;
+    text-decoration:none;
+  }
+  .brand span{ color:var(--rust); }
+  .navlinks{ display:flex; gap:28px; font-size:0.92rem; }
+  .navlinks a{ text-decoration:none; color:var(--ink-soft); transition:color .15s; }
+  .navlinks a:hover{ color:var(--ink); }
+  .navlinks a:focus-visible, a:focus-visible{ outline:2px solid var(--rust); outline-offset:3px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:96px 0 64px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero .kicker{
+    font-size:0.85rem;
+    color:var(--rust);
+    margin:0 0 18px;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4rem);
+    line-height:1.04;
+    margin:0 0 22px;
+    letter-spacing:-0.02em;
+    max-width:11ch;
+  }
+  .hero p.lede{
+    max-width:52ch;
+    font-size:1.12rem;
+    color:var(--ink-soft);
+    margin:0 0 36px;
+  }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 20px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    font-size:0.95rem;
+    font-weight:500;
+    border:1px solid var(--ink);
+    transition:transform .15s ease, background .15s ease, color .15s ease;
+  }
+  .btn.primary{ background:var(--ink); color:var(--paper); }
+  .btn.primary:hover{ transform:translateY(-2px); background:var(--teal); }
+  .btn.ghost{ background:transparent; color:var(--ink); }
+  .btn.ghost:hover{ transform:translateY(-2px); border-color:var(--rust); color:var(--rust); }
+
+  #waveform{
+    display:block;
+    width:100%;
+    height:110px;
+    margin-top:56px;
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:64px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:36px; gap:20px;
+  }
+  .section-head h2{
+    font-size:1.5rem; margin:0; letter-spacing:-0.01em;
+  }
+  .section-head .idx{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap:48px;
+  }
+  .about-grid p{ color:var(--ink-soft); margin:0 0 16px; font-size:1.02rem; }
+  .facts{ display:flex; flex-direction:column; gap:18px; }
+  .fact{ border-left:2px solid var(--rust); padding-left:16px; }
+  .fact .label{ font-family:'JetBrains Mono', monospace; font-size:0.78rem; color:var(--ink-soft); display:block; margin-bottom:4px; }
+  .fact .value{ font-size:0.98rem; }
+
+  /* ---------- PROJECTS ---------- */
+  .project{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    gap:32px;
+    padding:28px 0;
+    border-top:1px solid var(--line);
+  }
+  .project:last-child{ padding-bottom:0; }
+  .project .meta{ padding-top:2px; }
+  .project .meta .stack{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    color:var(--rust);
+    line-height:1.6;
+  }
+  .project h3{ margin:0 0 10px; font-size:1.2rem; }
+  .project ul{ margin:0; padding-left:18px; color:var(--ink-soft); }
+  .project li{ margin-bottom:6px; }
+  .project li::marker{ color:var(--rust); }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:28px 48px;
+  }
+  .skill-group .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    display:block; margin-bottom:10px;
+  }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-size:0.86rem;
+    padding:6px 12px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--paper);
+  }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-item{
+    display:grid;
+    grid-template-columns: 130px 1fr;
+    gap:24px;
+    padding:20px 0;
+    border-top:1px solid var(--line);
+  }
+  .edu-item:first-child{ border-top:none; }
+  .edu-item .years{ font-family:'JetBrains Mono', monospace; font-size:0.85rem; color:var(--ink-soft); }
+  .edu-item h3{ margin:0 0 4px; font-size:1.05rem; }
+  .edu-item p{ margin:0; color:var(--ink-soft); font-size:0.95rem; }
+
+  /* ---------- CERTS + LANGS ---------- */
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  .plain-list{ list-style:none; margin:0; padding:0; }
+  .plain-list li{
+    padding:12px 0;
+    border-top:1px solid var(--line);
+    font-size:0.98rem;
+  }
+  .plain-list li:first-child{ border-top:none; }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{ padding:64px 0 48px; }
+  .contact-line{
+    font-size:clamp(1.5rem, 4vw, 2.2rem);
+    max-width:16ch;
+    margin:0 0 32px;
+    letter-spacing:-0.01em;
+  }
+  .contact-links{ display:flex; flex-wrap:wrap; gap:14px; }
+  .contact-links a{
+    text-decoration:none;
+    border:1px solid var(--ink);
+    padding:10px 18px;
+    border-radius:var(--radius);
+    font-size:0.92rem;
+    transition:background .15s, color .15s;
+  }
+  .contact-links a:hover{ background:var(--ink); color:var(--paper); }
+  .foot-note{ margin-top:48px; font-size:0.8rem; color:var(--ink-soft); font-family:'JetBrains Mono', monospace; }
+
+  @media (max-width: 760px){
+    .about-grid, .two-col{ grid-template-columns:1fr; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .project{ grid-template-columns:1fr; }
+    .edu-item{ grid-template-columns:1fr; }
+    .navlinks{ display:none; }
+    .hero{ padding:64px 0 48px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .btn{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="brand">K.M.<span>Sagar</span></a>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero wrap">
+    <p class="kicker mono">Bengaluru, India — open to Software Development / Cybersecurity roles</p>
+    <h1>Building systems that listen, defend, and hold up under load.</h1>
+    <p class="lede">Final-year Information Science &amp; Engineering student at BMS College of Engineering, working across machine learning, full-stack development, and applied cybersecurity.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#projects">See the work</a>
+      <a class="btn ghost" href="mailto:sagarkori2005@gmail.com">Get in touch</a>
+    </div>
+    <canvas id="waveform" aria-hidden="true"></canvas>
+  </section>
+
+  <section id="about" class="wrap">
+    <div class="section-head">
+      <h2>About</h2>
+      <span class="idx mono">profile</span>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I'm drawn to problems where software has to make sense of messy, real-world signal — whether that's classifying street noise to flag traffic risk, or hardening a login flow against weak passwords. I like working close to the data and close to the user.</p>
+        <p>Right now I'm finishing my degree at BMS College of Engineering, having come up through a diploma in Computer Science at KLE's C.I.M Polytechnic. Along the way I've built full-stack applications, trained audio classification models, and picked up the fundamentals of cybersecurity — from attack patterns to authentication practice.</p>
+      </div>
+      <div class="facts">
+        <div class="fact">
+          <span class="label">CURRENTLY</span>
+          <span class="value">B.E. Information Science &amp; Engineering, BMS College of Engineering</span>
+        </div>
+        <div class="fact">
+          <span class="label">FOCUS AREAS</span>
+          <span class="value">Software &amp; full-stack development, machine learning, cybersecurity</span>
+        </div>
+        <div class="fact">
+          <span class="label">LANGUAGES SPOKEN</span>
+          <span class="value">English, Kannada, Hindi</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="wrap">
+    <div class="section-head">
+      <h2>Projects</h2>
+      <span class="idx mono">selected work</span>
+    </div>
+
+    <div class="project">
+      <div class="meta">
+        <div class="stack">Python<br>PyTorch<br>Librosa<br>Folium</div>
+      </div>
+      <div>
+        <h3>Urban Acoustic AI for Two-Wheeler Crash-Risk Detection</h3>
+        <ul>
+          <li>Detects traffic risk from environmental audio instead of cameras, keeping bystanders out of frame entirely.</li>
+          <li>A CNN trained on the UrbanSound8K and ESC-50 datasets classifies street sound in real time.</li>
+          <li>Risk is plotted as city heatmaps, so the output stays useful without ever storing identifiable footage.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="meta">
+        <div class="stack">React<br>Flask<br>SQLite</div>
+      </div>
+      <div>
+        <h3>Instagram Clone</h3>
+        <ul>
+          <li>A full-stack social app built to understand authentication, posting, and interaction flows end to end.</li>
+          <li>REST APIs in Flask handle the backend logic; SQLite stores users, posts, and relationships.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="meta">
+        <div class="stack">Python<br>Security</div>
+      </div>
+      <div>
+        <h3>Website Password Strength Testing Tool</h3>
+        <ul>
+          <li>Scores password strength against standard complexity and authentication guidelines.</li>
+          <li>Built as a practical exercise in applying cybersecurity fundamentals to everyday tools.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="wrap">
+    <div class="section-head">
+      <h2>Skills</h2>
+      <span class="idx mono">toolkit</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <span class="label">LANGUAGES</span>
+        <div class="chip-row">
+          <span class="chip">Python</span><span class="chip">Java</span><span class="chip">C</span><span class="chip">C++</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="label">WEB &amp; DATA</span>
+        <div class="chip-row">
+          <span class="chip">React</span><span class="chip">Flask</span><span class="chip">HTML</span><span class="chip">SQLite</span><span class="chip">MySQL</span>
+        </div>
+      </div>
+      <div class="skill-group" style="grid-column: 1 / -1;">
+        <span class="label">CORE SUBJECTS</span>
+        <div class="chip-row">
+          <span class="chip">Data Structures &amp; Algorithms</span>
+          <span class="chip">Object-Oriented Programming</span>
+          <span class="chip">DBMS</span>
+          <span class="chip">Computer Networks</span>
+          <span class="chip">Operating Systems</span>
+          <span class="chip">Machine Learning</span>
+          <span class="chip">Cybersecurity</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="wrap">
+    <div class="section-head">
+      <h2>Education</h2>
+      <span class="idx mono">timeline</span>
+    </div>
+    <div class="edu-item">
+      <div class="years mono">2024 — Present</div>
+      <div>
+        <h3>BMS College of Engineering, Bengaluru</h3>
+        <p>Bachelor of Engineering, Information Science and Engineering — completed 3rd year with 84%.</p>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="years mono">2021 — 2024</div>
+      <div>
+        <h3>KLE's C.I.M Polytechnic, Hubballi</h3>
+        <p>Diploma in Computer Science.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="two-col">
+      <div>
+        <div class="section-head">
+          <h2>Certifications</h2>
+          <span class="idx mono">credentials</span>
+        </div>
+        <ul class="plain-list">
+          <li>Introduction to Cyber Security</li>
+          <li>Introduction to Cyber Attacks</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-head">
+          <h2>Languages</h2>
+          <span class="idx mono">spoken</span>
+        </div>
+        <ul class="plain-list">
+          <li>English</li>
+          <li>Kannada</li>
+          <li>Hindi</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="wrap">
+    <h2 class="contact-line">Looking for someone to build, secure, or debug the next thing — let's talk.</h2>
+    <div class="contact-links">
+      <a href="mailto:sagarkori2005@gmail.com">sagarkori2005@gmail.com</a>
+      <a href="tel:+916361629607">+91 63616 29607</a>
+      <a href="https://linkedin.com/in/sagar-k-m-5a0911354" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <p class="foot-note">K. M. Sagar — Bengaluru, India</p>
+  </footer>
+
+</main>
+
+<script>
+  // Single subtle waveform render in the hero, echoing the acoustic-AI project.
+  (function(){
+    const canvas = document.getElementById('waveform');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+
+    function resize(){
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      draw();
+    }
+
+    function draw(){
+      const rect = canvas.getBoundingClientRect();
+      const w = rect.width, h = rect.height;
+      ctx.clearRect(0,0,w,h);
+      const bars = 64;
+      const gap = w / bars;
+      const seed = 7;
+      for(let i=0;i<bars;i++){
+        const t = i / bars;
+        const n = Math.sin(t*12 + seed) * Math.cos(t*5) + Math.sin(t*23)*0.4;
+        const amp = (Math.abs(n) * 0.6 + 0.15) * h;
+        const x = i * gap + gap*0.25;
+        const barW = gap*0.5;
+        const y = (h - amp) / 2;
+        ctx.fillStyle = i % 5 === 0 ? '#B85C2E' : '#17332F';
+        ctx.globalAlpha = i % 5 === 0 ? 0.9 : 0.35;
+        ctx.fillRect(x, y, barW, amp);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+  })();
+</script>
+
+</body>
+</html>
